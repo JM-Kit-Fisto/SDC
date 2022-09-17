@@ -1,0 +1,23 @@
+{
+  "name": "sdc",
+  "version": "1.0.0",
+  "description": "System Design Capstone for Hack Reactor",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JM-Kit-Fisto/SDC.git"
+  },
+  "author": "Brian T. Crouse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JM-Kit-Fisto/SDC/issues"
+  },
+  "homepage": "https://github.com/JM-Kit-Fisto/SDC#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
