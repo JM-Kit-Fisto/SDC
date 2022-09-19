@@ -1,17 +1,9 @@
-CREATE TABLE products (
-  product_id int PRIMARY KEY,
-  product_name varchar(60)
-);
-
 CREATE TABLE reviews (
   review_id int PRIMARY KEY,
-  product_id int
-  CONSTRAINT fk_product_id
-    FOREIGN KEY(product_id)
-      REFERENCES products(product_id),
+  product_id int,
   rating int,
-  review_date int,
-  summary varchar(60),
+  review_date bigint,
+  summary varchar(1000),
   body varchar(1000),
   recommend boolean,
   reported boolean,
@@ -23,12 +15,16 @@ CREATE TABLE reviews (
 
 CREATE TABLE photos (
   photo_id int PRIMARY KEY,
-  review_id int
-  CONSTRAINT fk_photo_review_id
+  review_id int,
+  CONSTRAINT fk_review_id
     FOREIGN KEY(review_id)
       REFERENCES reviews(review_id),
-  photo_url varchar(255),
+  photo_url varchar(255)
 );
+
+ copy reviews (review_id, product_id, rating, review_date, summary, body, recommend, reported, reviewer_name, review_email, response, helpfulness) from '/tmp/reviews.csv' delimiter ',' csv header;
+
+ copy photos (photo_id, review_id, photo_url) from '/tmp/data/reviews_photos.csv' delimiter ',' csv header;
 
 -- CREATE TABLE metaData (
 --   product_id int PRIMARY KEY,
