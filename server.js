@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const sequelize = require('./controllers.js')
 
 app.get('/reviews', (req, res) => {
   res.send('Hello World!')

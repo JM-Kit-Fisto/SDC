@@ -13,6 +13,8 @@ CREATE TABLE reviews (
   helpfulness int
 );
 
+copy reviews (review_id, product_id, rating, review_date, summary, body, recommend, reported, reviewer_name, review_email, response, helpfulness) from '/tmp/reviews.csv' delimiter ',' csv header;
+
 CREATE TABLE photos (
   photo_id int PRIMARY KEY,
   review_id int,
@@ -22,37 +24,25 @@ CREATE TABLE photos (
   photo_url varchar(255)
 );
 
- copy reviews (review_id, product_id, rating, review_date, summary, body, recommend, reported, reviewer_name, review_email, response, helpfulness) from '/tmp/reviews.csv' delimiter ',' csv header;
+copy photos (photo_id, review_id, photo_url) from '/tmp/data/reviews_photos.csv' delimiter ',' csv header;
 
- copy photos (photo_id, review_id, photo_url) from '/tmp/data/reviews_photos.csv' delimiter ',' csv header;
 
--- CREATE TABLE metaData (
---   product_id int PRIMARY KEY,
---   ratings
---   recommend
---   characteristics
--- );
+CREATE TABLE characteristics (
+  id int PRIMARY KEY,
+  product_id int,
+  name varchar(60)
+);
 
--- CREATE TABLE ratings (
---   1_star int,
---   2_star int,
---   3_star int,
---   4_star int,
---   5_star int
---   product_id int,
---   CONSTRAINT fk_product_id_ratings
---     FOREIGN KEY(product_id)
---       REFERENCES products(product_id)
--- );
+copy characteristics (id, product_id, name) from '/tmp/data/characteristics.csv' delimiter ',' csv header;
 
--- CREATE TABLE characteristics (
---   char_id int PRIMARY KEY,
---   char_name varchar(60),
+CREATE TABLE characteristic_reviews (
+  id int PRIMARY KEY,
+  characteristic_id int,
+  CONSTRAINT characteristic_id
+    FOREIGN KEY(characteristic_id)
+      REFERENCES characteristics(id),
+  review_id int,
+  value int
+);
 
--- );
-
--- CREATE TABLE recommend (
---   review_id PRIMARY KEY
---   true int,
---   false int
--- )
+copy characteristic_reviews (id, characteristic_id, review_id, value) from '/tmp/data/characteristic_reviews.csv' delimiter ',' csv header;
