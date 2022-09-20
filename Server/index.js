@@ -1,19 +1,31 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const sequelize = require('./controllers.js')
 
 app.get('/reviews', (req, res) => {
+  connect()
+  .then((res) => {
+
+  })
+  .catch((err) => {
+
+  })
   res.send('Hello World!')
 })
 
 app.get('/reviews/meta', (req, res) => {
-  res.send('Hello World!')
+  connect()
+  .then((res) => {
+
+  })
+  .catch((err) => {
+
+  })
 })
 
-app.post('/reviews', (req, res) => {
-  res.send('Hello World!')
-})
+// app.post('/reviews', (req, res) => {
+//   res.send('Hello World!')
+// })
 
 // app.put('/reviews/???', (req, res) => {
 //   res.send('Hello World!')
