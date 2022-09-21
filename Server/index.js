@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const getAll = require('./Controllers/controllers.js')
 
 app.get('/reviews', (req, res) => {
-  connect()
-  .then((res) => {
-
+  getAll()
+  .then((data) => {
+    console.log(data.slice)
   })
   .catch((err) => {
 

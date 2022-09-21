@@ -13,14 +13,11 @@ CREATE TABLE reviews (
   helpfulness int
 );
 
-copy reviews (review_id, product_id, rating, review_date, summary, body, recommend, reported, reviewer_name, review_email, response, helpfulness) from '/tmp/reviews.csv' delimiter ',' csv header;
+copy reviews (review_id, product_id, rating, review_date, summary, body, recommend, reported, reviewer_name, review_email, response, helpfulness) from '/tmp/data/reviews.csv' delimiter ',' csv header;
 
 CREATE TABLE photos (
   photo_id int PRIMARY KEY,
   review_id int,
-  CONSTRAINT fk_review_id
-    FOREIGN KEY(review_id)
-      REFERENCES reviews(review_id),
   photo_url varchar(255)
 );
 
@@ -38,9 +35,6 @@ copy characteristics (id, product_id, name) from '/tmp/data/characteristics.csv'
 CREATE TABLE characteristic_reviews (
   id int PRIMARY KEY,
   characteristic_id int,
-  CONSTRAINT characteristic_id
-    FOREIGN KEY(characteristic_id)
-      REFERENCES characteristics(id),
   review_id int,
   value int
 );

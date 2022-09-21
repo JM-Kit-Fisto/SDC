@@ -38,8 +38,12 @@ class Photos extends Model {}
       modelName: 'photos'
   })
 
-Reviews.hasMany(Photos)
-Photos.belongsTo(Reviews)
+  Reviews.hasMany(Photos, {
+    foreignKey: 'review_id'
+  });
+  Photos.belongsTo(Reviews, {
+    foreignKey: 'review_id'
+  });
 
 class Characteristics extends Model {}
   Characteristics.init({
@@ -71,7 +75,9 @@ class Characteristics_Reviews extends Model {}
   })
 
   Characteristics.hasMany(Characteristics_Reviews)
-  Characteristics_Reviews.belongsTo(Characteristics)
+  Characteristics_Reviews.belongsTo(Characteristics, {
+    foreignKey: 'characteristic_id'
+  })
 
 module.exports.Reviews = Reviews;
 module.exports.Photos = Photos;
