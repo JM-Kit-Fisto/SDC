@@ -1,9 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const models = require('../../db/models.js');
-const Reviews = models.Reviews;
-const Photos = models.Photos;
-const Characteristics = models.Characteristics;
-const Characteristics_Reviews = models.Characteristics_Reviews;
+const {
+  Reviews,
+  Photos,
+  Characteristics,
+  Characteristics_Reviews
+} = require('../db/models.js');
 
 const getAllReviews = async (productId) => {
   const allReviews = await Reviews.findAll({
@@ -49,10 +50,16 @@ const addReview = async (userReview) => {
 }
 
 const incrementHelpfulness = async (reviewId) => {
-  //increment
+  Reviews.increment(['helpfulness'], { where: { review_id: reviewId}})
+  .then((res) => {
+    console.log('Marked Helpful!')
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 }
 
-const getOneUpdate = async (reviewId) => {
+const report = async (reviewId) => {
   //update
 }
 

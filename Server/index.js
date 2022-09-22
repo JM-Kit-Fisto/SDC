@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const { getAllReviews, addReview } = require('./Controllers/controllers.js');
+const {
+  getAllReviews,
+  addReview,
+  incrementHelpfulness,
+  getOneUpdate
+ } = require('./controllers.js');
 
 app.use(express.json())
 
@@ -15,26 +20,35 @@ app.get('/reviews', (req, res) => {
   })
 })
 
-app.post('/reviews', (req, res) => {
-  addReview(req.body)
-  .catch((err) => {
-    console.log(err)
-  })
-  res.sendStatus(201)
-})
-
 // app.get('/reviews/meta', (req, res) => {
+
 //   .then((res) => {
+
 //   })
 //   .catch((err) => {
 
 //   })
 // })
 
+app.post('/reviews', (req, res) => {
+  addReview(req.body)
+  .then(() => {
+    res.sendStatus(201)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+})
 
-// app.put('/reviews/???', (req, res) => {
-//   res.send('Hello World!')
-// })
+app.put('/reviews/:review_id/helpful', (req, res) => {
+  incrementHelpfulness(req.params.review_id)
+  .then(() => {
+    res.sendStatus(204)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -74,7 +74,9 @@ class Characteristics_Reviews extends Model {}
       modelName: 'characteristic_reviews'
   })
 
-  Characteristics.hasMany(Characteristics_Reviews)
+  Characteristics.hasMany(Characteristics_Reviews, {
+    foreignKey: 'characteristic_id'
+  })
   Characteristics_Reviews.belongsTo(Characteristics, {
     foreignKey: 'characteristic_id'
   })
