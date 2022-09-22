@@ -5,7 +5,7 @@ const {
   getAllReviews,
   addReview,
   incrementHelpfulness,
-  getOneUpdate
+  report
  } = require('./controllers.js');
 
 app.use(express.json())
@@ -42,6 +42,16 @@ app.post('/reviews', (req, res) => {
 
 app.put('/reviews/:review_id/helpful', (req, res) => {
   incrementHelpfulness(req.params.review_id)
+  .then(() => {
+    res.sendStatus(204)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+})
+
+app.put('/reviews/:review_id/report', (req, res) => {
+  report(req.params.review_id)
   .then(() => {
     res.sendStatus(204)
   })

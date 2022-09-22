@@ -50,7 +50,7 @@ const addReview = async (userReview) => {
 }
 
 const incrementHelpfulness = async (reviewId) => {
-  Reviews.increment(['helpfulness'], { where: { review_id: reviewId}})
+  Reviews.increment(['helpfulness'], { where: { review_id: reviewId }})
   .then((res) => {
     console.log('Marked Helpful!')
   })
@@ -60,10 +60,16 @@ const incrementHelpfulness = async (reviewId) => {
 }
 
 const report = async (reviewId) => {
-  //update
+  Reviews.update({ reported: true }, { where: { review_id: reviewId }})
+  .then((res) => {
+    console.log('Reported!')
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 }
 
 module.exports.getAllReviews = getAllReviews;
 module.exports.addReview = addReview;
 module.exports.incrementHelpfulness = incrementHelpfulness;
-module.exports.getOneUpdate = getOneUpdate;
+module.exports.report = report;
