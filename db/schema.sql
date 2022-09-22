@@ -40,3 +40,10 @@ CREATE TABLE characteristic_reviews (
 );
 
 copy characteristic_reviews (id, characteristic_id, review_id, value) from '/tmp/data/characteristic_reviews.csv' delimiter ',' csv header;
+
+create index reviews_id_index on reviews (review_id);
+create index product_id_index on reviews (product_id);
+create index photos_photo_id_index on photos (photo_id);
+create index photos_review_id_index on photos (review_id);
+create index chars_characteristics_id_index on characteristics (id);
+create index chars_char_reviews_id_index on characteristic_reviews (id);

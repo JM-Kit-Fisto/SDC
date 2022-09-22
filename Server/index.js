@@ -1,17 +1,16 @@
-const express = require('express')
-const app = express()
-const port = 3000
-const getAll = require('./Controllers/controllers.js')
+const express = require('express');
+const app = express();
+const port = 3000;
+const { getAllReviews} = require('./Controllers/controllers.js');
 
 app.get('/reviews', (req, res) => {
-  getAll()
+  getAllReviews(req.query.product_id)
   .then((data) => {
-    console.log(data.slice)
+    res.send(data)
   })
   .catch((err) => {
 
   })
-  res.send('Hello World!')
 })
 
 app.get('/reviews/meta', (req, res) => {

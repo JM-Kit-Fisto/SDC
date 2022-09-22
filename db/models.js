@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = require('./index.js').sequelize;
+const sequelize = require('./connection.js').sequelize;
 
 class Reviews extends Model {}
   Reviews.init({
