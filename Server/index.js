@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const { getAllReviews} = require('./Controllers/controllers.js');
+const { getAllReviews, addReview } = require('./Controllers/controllers.js');
+
+app.use(express.json())
 
 app.get('/reviews', (req, res) => {
   getAllReviews(req.query.product_id)
@@ -9,23 +11,26 @@ app.get('/reviews', (req, res) => {
     res.send(data)
   })
   .catch((err) => {
-
+    console.log(err)
   })
 })
 
-app.get('/reviews/meta', (req, res) => {
-  connect()
-  .then((res) => {
-
-  })
+app.post('/reviews', (req, res) => {
+  addReview(req.body)
   .catch((err) => {
-
+    console.log(err)
   })
+  res.sendStatus(201)
 })
 
-// app.post('/reviews', (req, res) => {
-//   res.send('Hello World!')
+// app.get('/reviews/meta', (req, res) => {
+//   .then((res) => {
+//   })
+//   .catch((err) => {
+
+//   })
 // })
+
 
 // app.put('/reviews/???', (req, res) => {
 //   res.send('Hello World!')
