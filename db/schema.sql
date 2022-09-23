@@ -23,7 +23,6 @@ CREATE TABLE photos (
 
 copy photos (photo_id, review_id, photo_url) from '/tmp/data/reviews_photos.csv' delimiter ',' csv header;
 
-
 CREATE TABLE characteristics (
   id int PRIMARY KEY,
   product_id int,

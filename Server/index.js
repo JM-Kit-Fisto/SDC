@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const {
   getAllReviews,
+  getMetaData,
   addReview,
   incrementHelpfulness,
   report
@@ -20,15 +21,15 @@ app.get('/reviews', (req, res) => {
   })
 })
 
-// app.get('/reviews/meta', (req, res) => {
-
-//   .then((res) => {
-
-//   })
-//   .catch((err) => {
-
-//   })
-// })
+app.get('/reviews/meta', (req, res) => {
+  getMetaData(req.query.product_id)
+  .then((data) => {
+    res.send(data)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+})
 
 app.post('/reviews', (req, res) => {
   addReview(req.body)

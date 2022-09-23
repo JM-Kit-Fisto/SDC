@@ -20,7 +20,94 @@ const getAllReviews = async (productId) => {
   return allReviews;
 }
 
+const getMetaData = async (productId) => {
+  const metaData = await Characteristics.findAll({
+    include: [
+      { model: Characteristics_Reviews, required: true }
+    ],
+    where: {
+      product_id: productId
+    },
+    raw: true
+  });
+
+  //query all reviews for ratings and recommended
+  const reviews = await Reviews.findAll({
+    where: {
+      product_id: productId
+    },
+    raw: true
+  })
+  const incrementByOne = (obj, num) => {
+    obj[num] += 1;
+  }
+  //format metadata to FE req
+  const formatted = {
+    product_id: productId,
+    ratings: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0
+    },
+    recommended: {
+      false: 0,
+      true: 0
+    },
+    characteristics: {
+      Fit: {
+        id: 1,
+        value: ''
+      },
+      Length: {
+        id: 2,
+        value: ''
+      },
+      Comfort: {
+        id: 3,
+        value: ''
+      },
+      Quality: {
+        id: 4,
+        value: ''
+      },
+    }
+  }
+  reviews.forEach((review) => {
+    switch (review.rating) {
+      case 1:
+        incrementByOne(formatted.ratings, 1);
+        break;
+      case 2:
+        incrementByOne(formatted.ratings, 2);
+        break;
+      case 3:
+        incrementByOne(formatted.ratings, 3);
+        break;
+      case 4:
+        incrementByOne(formatted.ratings, 4);
+        break;
+      case 5:
+        incrementByOne(formatted.ratings, 5);
+        break;
+    }
+    switch (review.recommend) {
+      case true:
+        incrementByOne(formatted.recommended, true)
+      case false:
+        incrementByOne(formatted.recommended, false)
+    }
+  })
+  //query characteristic_reviews per id
+
+
+  // return formatted;
+  console.log(metaData)
+}
+
 const addReview = async (userReview) => {
+  //add review
   let maxId = await Reviews.findAll({
     attributes: [Sequelize.fn('max', Sequelize.col('review_id'))],
     raw: true,
@@ -47,6 +134,8 @@ const addReview = async (userReview) => {
   .catch((err) => {
     console.log(err)
   })
+  //increment metadata
+
 }
 
 const incrementHelpfulness = async (reviewId) => {
@@ -70,6 +159,7 @@ const report = async (reviewId) => {
 }
 
 module.exports.getAllReviews = getAllReviews;
+module.exports.getMetaData = getMetaData;
 module.exports.addReview = addReview;
 module.exports.incrementHelpfulness = incrementHelpfulness;
 module.exports.report = report;
