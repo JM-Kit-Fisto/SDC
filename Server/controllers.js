@@ -21,16 +21,6 @@ const getAllReviews = async (productId) => {
 }
 
 const getMetaData = async (productId) => {
-  const metaData = await Characteristics.findAll({
-    include: [
-      { model: Characteristics_Reviews, required: true }
-    ],
-    where: {
-      product_id: productId
-    },
-    raw: true
-  });
-
   //query all reviews for ratings and recommended
   const reviews = await Reviews.findAll({
     where: {
@@ -100,10 +90,24 @@ const getMetaData = async (productId) => {
     }
   })
   //query characteristic_reviews per id
+  const metaData = await Characteristics.findAll({
+    include: [
+      { model: Characteristics_Reviews, required: true }
+    ],
+    where: {
+      product_id: productId
+    },
+    raw: true
+  });
 
+  metaData.forEach((characteristic) => {
+    formattedChars = formatted.characteristics;
+    const value = characteristic['characteristic_reviews.value'];
+    formattedChars[characteristic.name].id = characteristic.id;
+    formattedChars[characteristic.name].value =+ value;
+  })
 
-  // return formatted;
-  console.log(metaData)
+  return formatted;
 }
 
 const addReview = async (userReview) => {
